@@ -1,0 +1,28 @@
+# Added these to the 'action' file of the virtualenv.
+
+# Setup go paths:
+export GOPATH="$VIRTUAL_ENV/go";
+export PATH="$GOPATH/bin:$PATH";
+export PATH="$PATH:/usr/local/go/bin";
+
+# Setup go code source:
+export ROOT_HOVERFLY="/go/src/github.com/SpectoLabs/hoverfly";
+
+# Setup:
+alias testCompileHoverfly='go install github.com/SpectoLabs/hoverfly';
+alias testCaptureStart='unset HTTP_PROXY;$VIRTUAL_ENV/go/bin/hoverfly --capture';
+alias testGetUrls='unset HTTP_PROXY;python $VIRTUAL_ENV$ROOT_HOVERFLY/examples/clients/readthedocs_query/test.py --urls=1';
+alias testSynthesizeAddPause='$VIRTUAL_ENV/go/bin/hoverfly --synthesize --middleware "$VIRTUAL_ENV$ROOT_HOVERFLY/examples/middleware/delay_policy/add_delay.py"';
+alias testSynthesizeModifyResponse='$VIRTUAL_ENV/go/bin/hoverfly --synthesize --middleware "$VIRTUAL_ENV$ROOT_HOVERFLY/examples/middleware/modify_response/modify_response.py"';
+alias testSynthesizePaginationResponse='$VIRTUAL_ENV/go/bin/hoverfly --synthesize --middleware "$VIRTUAL_ENV$ROOT_HOVERFLY/examples/middleware/pagination_access/pagination_access_order.py"';
+alias testRun='export HTTP_PROXY="http://localhost:8500/";python $VIRTUAL_ENV$ROOT_HOVERFLY/examples/clients/readthedocs_query/test.py';
+alias testPaginationRun='export HTTP_PROXY="http://localhost:8500/";python $VIRTUAL_ENV$ROOT_HOVERFLY/examples/clients/pagination_query/test.py';
+alias testVirtualizeStart='$VIRTUAL_ENV/go/bin/hoverfly --destination="."';
+
+
+# Monitoring:
+alias curlRecordedRequests='curl http://localhost:8888/records';
+alias curlHoverflyState='curl http://localhost:8888/state';
+alias curlRecordedRequestsExport='curl http://localhost:8888/records > $VIRTUAL_ENV/requestsExport.json';
+alias curlRecordedRequestsClear='curl -X DELETE http://localhost:8888/records';
+
